@@ -1,0 +1,5 @@
+/home/guilherme/IC-FR/sndfile-example-src/build/CMakeFiles/wav_cp.dir
+/home/guilherme/IC-FR/sndfile-example-src/build/CMakeFiles/wav_hist.dir
+/home/guilherme/IC-FR/sndfile-example-src/build/CMakeFiles/wav_dct.dir
+/home/guilherme/IC-FR/sndfile-example-src/build/CMakeFiles/edit_cache.dir
+/home/guilherme/IC-FR/sndfile-example-src/build/CMakeFiles/rebuild_cache.dir
