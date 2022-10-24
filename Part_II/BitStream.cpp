@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -19,11 +20,6 @@ using namespace std;
             mode = 0;
             buffer = 0;
             pointer = 0;
-            
-            // get size of file
-            binFile.seekg (0, binFile.end);
-            size = binFile.tellg();
-            binFile.seekg (0, binFile.beg);
         }
 
         else{
@@ -50,6 +46,14 @@ using namespace std;
         buffer = buffer | ((bit & 0x01) << pointer);
     };
 
+    void BitStream::writeNBits(const char* bitsToWrite, int numBitsToWrite){
+        int i = 0;
+        while(i < numBitsToWrite){
+            writeBit(bitsToWrite[i]);
+            i++;
+        }
+    };
+
     auto BitStream::readBit(){
         if(pointer == 0){ // Continue to next byte
             pointer = 8;
@@ -63,6 +67,18 @@ using namespace std;
         pointer--;
         return ((buffer >> pointer) & 0x01);
     };
+
+    auto BitStream::readNBits(int numBitsToRead){
+        int i = 0;
+        vector<int> requestedBits;
+
+        while(i < numBitsToRead){
+            requestedBits.push_back(readBit());
+            i++;
+        }
+        return requestedBits;
+    };
+
 
     void BitStream::closeFile(){
         if(mode == 1 && pointer != 8) { // Can only write in bytes, so pad the remaining bits
