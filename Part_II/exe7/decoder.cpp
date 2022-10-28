@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include <filesystem>
 
 using namespace std;
 
@@ -10,23 +9,26 @@ int main(int argc, char** argv){
     if (argc != 2)
     {
         throw invalid_argument("ERROR! Usage: <./decode filename>");
-    }else if(!filesystem::exists(argv[1])){
-        throw invalid_argument("ERROR! Please choose an existing binary file to decode to txt!");
     }
 
     try
     {
+        //size of file in bits
+        ifstream mybinfile(argv[1], ios::binary);
+        if(!mybinfile.is_open()){
+            throw invalid_argument("ERROR! Could not open binary file. Check if the file exists!");
+        }
+
+        //size of file in bytes
+        mybinfile.seekg(0, ios::end);
+        int file_size = mybinfile.tellg();
+        mybinfile.seekg(0, ios::beg);
+
         //bin file to read from
         BitStream bsIn(argv[1], 'r');
 
         //txt file to write to
-        ofstream mytxtfile("mytxtfile.txt");
-
-        //size of file in bits
-        ifstream myfile(argv[1], ios::binary);
-        myfile.seekg(0, ios::end);
-        int file_size = myfile.tellg();
-        myfile.close();
+        ofstream mytxtfile("decodedFile.txt");
 
         vector<int> arr;
 
@@ -42,11 +44,11 @@ int main(int argc, char** argv){
         mytxtfile.close();
         //close bitstream
         bsIn.closeFile();
+        cout<<"Binary file decoded successfully to mytxtfile.\n";
     }
     catch(const exception& e)
     {
         cerr << "An error occurred while decoding the file:\n" << e.what() << endl;
     }
-    cout<<"Binary file decoded successfully to mytxtfile.\n";
     return 0;
 }

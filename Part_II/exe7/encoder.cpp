@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <cstring>
-#include <filesystem>
 
 using namespace std;
 
@@ -10,8 +9,6 @@ int main(int argc, char** argv){
     if (argc != 2)
     {
         throw invalid_argument("ERROR! Usage: <./encode filename.txt>");
-    }else if(!filesystem::exists(argv[1])){
-        throw invalid_argument("ERROR! Please choose an existing txt file to encode to binary!");
     }
 
     try
@@ -19,18 +16,20 @@ int main(int argc, char** argv){
         int cnt = 0;
         char ch;
 
-        //size of file in bits
-        ifstream myfile (argv[1], ios::binary);
-        myfile.seekg(0, ios::end);
-        int file_size = myfile.tellg();
-        myfile.close();
-
         //txt file to read from
         ifstream mytxtfile (argv[1]);
+        if(!mytxtfile.is_open()){
+            throw invalid_argument("ERROR! Could not open txt file. Check if the file exists!");
+        }
+
+        //size of file in bytes
+        mytxtfile.seekg(0, ios::end);
+        int file_size = mytxtfile.tellg();
+        mytxtfile.seekg(0, ios::beg);
 
         //bin file to write to
-        fstream mybinfile;
-        BitStream bsOut("mybinfile", 'w');
+        fstream encodedFile;
+        BitStream bsOut("encodedFile", 'w');
 
         string mystring = "";
         char arr[mystring.length() + 1];
@@ -51,11 +50,11 @@ int main(int argc, char** argv){
         mytxtfile.close();
         //close bitstream
         bsOut.closeFile();
+        cout<<"Text file encoded successfully to encodedFile.\n";
     }
     catch(const exception& e)
     {
         cerr << "An error occurred while encoding the file:\n" << e.what() << endl;
-    } 
-    cout<<"Text file encoded successfully to mybinfile.\n";
+    }
     return 0;
 }
