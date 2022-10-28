@@ -1,4 +1,4 @@
-#include "BitStream.cpp"
+#include "../BitStream.cpp"
 #include <iostream>
 
 using namespace std;
@@ -11,7 +11,7 @@ int main(){
     // Writes 00100011 -> "#"
     testMultipleWrite.writeNBits("00100011", 8);
 
-    // Writes 1 bit and the class function automatically fills the remaining 7 bits to write 10000000
+    // Writes 1 bit and the Bitstream class automatically fills the remaining 7 bits to write 10000000
     testMultipleWrite.writeNBits("1", 1);
 
     testMultipleWrite.closeFile();
@@ -19,12 +19,12 @@ int main(){
 
     /*...................................................................................................*/
 
-    /* Test  N bit reading mode --> reads from file containing 00100011 10000000 */
-    BitStream testMultipleRead("multiple_read_file", 'r');
+    /* Test N bit reading mode --> reads from file containing 00100011 10000000 */
+    BitStream testMultipleRead("test_read_file", 'r');
 
-    // Outputs the first 5 bits of file -> 00100
-    cout << "The first 5 bits from the file are: \n";
-    for(auto i : testMultipleRead.readNBits(5)){
+    // Outputs the first 16 bits of file -> 00100011 10000000
+    cout << "The first 16 bits from test_read_file are: \n";
+    for(auto i : testMultipleRead.readNBits(16)){
         cout << i;
     }
     cout << "\n";
