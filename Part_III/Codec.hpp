@@ -5,6 +5,7 @@
 #include <sndfile.hh>
 #include <fstream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -23,7 +24,8 @@ class Codec {
         void encode(vector<short> samples); // Encode audio file into binary file
         void decode();                      // Decode binary file into audio file
 
-        void dctTransform(vector<short> samples); // Perform DCT transformation
+        void dctTransform(vector<double> &samples); // Perform DCT Transformation
+        void dctInvert(vector<double> &samples); // Perform DCT Invertion
 
     public:
         Codec(const char *filename, char modeIn);
