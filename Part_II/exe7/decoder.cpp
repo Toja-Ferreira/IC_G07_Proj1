@@ -44,7 +44,7 @@ int main(int argc, char** argv){
         mytxtfile.close();
         //close bitstream
         bsIn.closeFile();
-        cout<<"Binary file decoded successfully to mytxtfile.\n";
+        cout<<"Binary file decoded successfully to decodedFile.txt.\n";
     }
     catch(const exception& e)
     {
