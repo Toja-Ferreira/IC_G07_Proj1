@@ -8,7 +8,7 @@ using namespace std;
 int main(int argc, char** argv){
     if (argc != 2)
     {
-        throw invalid_argument("ERROR! Usage: <./encode filename.txt>");
+        throw invalid_argument("ERROR! Usage: <./encoder filename.txt>");
     }
 
     try

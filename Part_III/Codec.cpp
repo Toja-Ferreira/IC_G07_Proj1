@@ -3,7 +3,6 @@
 /*---------------------------------------*/
 #include "Codec.hpp"
 #include "../Part_II/exe6/BitStream.cpp"
-#include "../sndfile-example-src/wav_quant.h"
 #include <sndfile.hh>
 #include <stdexcept>
 #include <cmath>
